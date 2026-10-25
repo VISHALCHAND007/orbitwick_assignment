@@ -4,14 +4,27 @@ import 'package:orbitwick_assignment/features/home/model/product_model.dart';
 class NetworkReqModel {
   late Response response;
   String? errorMessage;
-  List<ProductModel> products = [];
+  late List<ProductModel> products;
 
   NetworkReqModel({
     Response? response,
     String? errorMsg,
-    required List<ProductModel> products,
+    List<ProductModel>? products,
   }) {
     this.response = response ?? Response.none;
     errorMessage = errorMsg ?? '';
+    this.products = products ?? [];
+  }
+
+  NetworkReqModel copyWith({
+    Response? response,
+    String? errorMessage,
+    List<ProductModel>? products,
+  }) {
+    return NetworkReqModel(
+      response: response ?? this.response,
+      errorMsg: errorMessage ?? this.errorMessage,
+      products: products ?? this.products,
+    );
   }
 }

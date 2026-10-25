@@ -9,7 +9,6 @@ class ProductModel {
   final double discountPercentage;
   final double rating;
   final int stockLeft;
-  final List<String> tags;
   final String brand;
   final int weight;
   final String warrantyInfo;
@@ -30,7 +29,6 @@ class ProductModel {
     required this.discountPercentage,
     required this.rating,
     required this.stockLeft,
-    required this.tags,
     required this.brand,
     required this.weight,
     required this.warrantyInfo,
@@ -44,10 +42,13 @@ class ProductModel {
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
-    final reviews = json['reviews'] as List<Map<String, dynamic>>;
+    final reviews = json['reviews'];
 
-    final reviewsDecoded = reviews
-        .map((review) => Reviews.fromJson(review))
+    final List<Reviews> reviewsDecoded = reviews
+        .map<Reviews>(
+          (review) =>
+              Reviews.fromJson(Map<String, dynamic>.from(review as Map)),
+        )
         .toList();
 
     return ProductModel(
@@ -59,7 +60,6 @@ class ProductModel {
       discountPercentage: json['discountPercentage'],
       rating: json['rating'],
       stockLeft: json['stock'],
-      tags: json['tags'],
       brand: json['brand'],
       weight: json['weight'],
       warrantyInfo: json['warrantyInformation'],
@@ -68,7 +68,9 @@ class ProductModel {
       reviews: reviewsDecoded,
       returnPolicy: json['returnPolicy'],
       minOrderQuantity: json['minimumOrderQuantity'],
-      images: json['images'],
+      images: (json['images'] as List<dynamic>)
+          .map((image) => image.toString())
+          .toList(),
       thumbnail: json['thumbnail'],
     );
   }

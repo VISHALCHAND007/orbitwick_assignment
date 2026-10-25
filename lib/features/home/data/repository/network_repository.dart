@@ -14,10 +14,10 @@ class NetworkRepositoryImpl implements NetworkRepository {
   Future<List<ProductModel>> fetchProducts() async {
     final res = await http.get(Uri.parse(Url.fetchProducts));
     if (res.statusCode == 200) {
-      final data = jsonDecode(res.body) as List;
-      if (kDebugMode) {
-        print(data);
-      }
+      final map = jsonDecode(res.body) as Map<String, dynamic>;
+
+      final data = map['products'] as List;
+
       return data.map((product) => ProductModel.fromJson(product)).toList();
     }
     throw Exception('Error: ${res.statusCode}');
