@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:orbitwick_assignment/core/static_data/my_strings.dart';
 import 'package:orbitwick_assignment/features/home/data/viewmodel/network_view_model.dart';
 import 'package:orbitwick_assignment/features/home/ui/widgets/card/product_item_card.dart';
+import 'package:orbitwick_assignment/features/home/ui/widgets/error_and_empty_state_handler.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -37,9 +38,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: networkViewModel.response == .loading
             ? Center(child: CircularProgressIndicator())
             : networkViewModel.response == .error
-            ? Text('Error: ${networkViewModel.errorMessage}')
+            ? ErrorAndEmptyStateHandler(stateType: .error)
             : products.isEmpty
-            ? Center(child: Text('No product found'))
+            ? ErrorAndEmptyStateHandler(stateType: .empty)
             : GridView.builder(
                 itemCount: products.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

@@ -36,7 +36,7 @@ class NetworkViewModel extends StateNotifier<NetworkReqModel> {
       print('size: ${products.length}');
     }
     state = state.copyWith(response: Response.data, products: products);
-    print(state.products.length);
+    // state = state.copyWith(response: .data, products: []);
   }
 
   Future<void> fetchProducts() async {

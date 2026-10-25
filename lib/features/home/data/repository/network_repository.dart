@@ -20,6 +20,6 @@ class NetworkRepositoryImpl implements NetworkRepository {
 
       return data.map((product) => ProductModel.fromJson(product)).toList();
     }
-    throw Exception('Error: ${res.statusCode}');
+    throw Exception('${res.statusCode}');
   }
 }
